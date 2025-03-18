@@ -1,0 +1,8 @@
+:9191 {
+	reverse_proxy /nuxeo/* http://localhost:8080 {
+	}
+
+	file_server {
+		root dist
+	}
+}
