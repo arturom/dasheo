@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Consumer, ConsumerPosition, StreamsClient } from "./streams";
+  import type { Consumer, ConsumerPosition, StreamsClient } from "./client";
 
     interface Props {
         consumer: Consumer;

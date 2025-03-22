@@ -1,6 +1,6 @@
 <script lang="ts">
-  import ConsumerSection from "./ConsumerSection.svelte";
-import type { Consumer, Stream, StreamsClient } from "./streams";
+    import ConsumerSection from "./ConsumerSection.svelte";
+    import type { Consumer, Stream, StreamsClient } from "./client";
 
     interface Props {
         stream: Stream;

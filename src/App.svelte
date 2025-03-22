@@ -1,30 +1,15 @@
 <script lang="ts">
-  import StreamSection from "./lib/StreamSection.svelte";
-  import { createWithBasicAuth, createWithHeader, type Stream, type StreamsClient } from "./lib/streams";
+  import Auth from "./lib/auth/Auth.svelte";
+  import StreamSection from "./lib/streams/StreamSection.svelte";
+  import { type Stream, type StreamsClient } from "./lib/streams/client";
 
   let client: StreamsClient | undefined = $state(undefined);
   let streams: Stream[] = $state([]);
-
-  let baseUrl: string = $state('nuxeo/api/v1');
-  let username: string = $state('Administrator');
-  let password: string = $state('Administrator');
-  let headerName: string = $state('');
-  let headerValue: string = $state('');
   let error: string = $state('');
 
-
-  async function basicAuth(e: SubmitEvent) {
-    e.preventDefault();
-    e.stopPropagation();
-    client = createWithBasicAuth(baseUrl, username, password);
-    fetchStreams(client);
-  }
-
-  async function customAuth(e: SubmitEvent) {
-    e.preventDefault();
-    e.stopPropagation();
-    client = createWithHeader(baseUrl, headerName, headerValue);
-    fetchStreams(client);
+  function onConnect(c: StreamsClient) {
+    client = c;
+    fetchStreams(c);
   }
 
   async function fetchStreams(client: StreamsClient) {
@@ -40,28 +25,7 @@
 </script>
 
 <header>
-
-  <form onsubmit={basicAuth}>
-    <h4>Basic Auth</h4>
-    <label>Base URL</label>
-    <input type="text" bind:value={baseUrl} />
-    <label>Username</label>
-    <input type="text" bind:value={username} />
-    <label>Password</label>
-    <input type="password" bind:value={password} />
-    <button>Connect</button>
-  </form>
-
-  <form onsubmit={customAuth}>
-    <h4>Custom Auth</h4>
-    <label>Header Name</label>
-    <input type="text" bind:value={headerName} />
-    <label>Header Value</label>
-    <input type="password" bind:value={headerValue} />
-    <button>Connect</button>
-  </form>
-
-  {error}
+  <Auth onConnect={onConnect}/>
 </header>
 
 {#if client}
@@ -75,26 +39,7 @@
 <style>
 
   header {
-    display: flex;
-  }
-
-  form {
     padding: 1em;
-  }
-
-  input {
-    max-width: 30em;
-    padding: .4em;
-  }
-
-  label {
-    font-size: .8rem;
-    margin-top: 1em;
-  }
-
-  form button {
-    margin-top: 1em;
-    padding: .4em;
   }
 
   main {
