@@ -7,12 +7,20 @@
 
     const { onConnect }: Props = $props();
 
-    let baseUrl: string = $state('nuxeo/api/v1');
+    let baseUrl: string = $state(guessBaseUrl());
     let method: string = $state('basic');
     let username: string = $state('Administrator');
     let password: string = $state('Administrator');
     let headerName: string = $state('');
     let headerValue: string = $state('');
+
+    function guessBaseUrl() {
+        const { origin } = window.location;
+        if (origin.endsWith('github.io')) {
+            return 'http://localhost:8080/nuxeo';
+        }
+        return `${origin}/nuxeo`;
+    }
 
     async function authenticate(e: SubmitEvent) {
         e.preventDefault();

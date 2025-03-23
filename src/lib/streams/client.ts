@@ -39,17 +39,17 @@ export class StreamsClient {
     }
 
     getStreams(): Promise<Stream[]> {
-        return this.getJson('/management/stream/streams');
+        return this.getJson('/api/v1/management/stream/streams');
     }
 
 
     getStreamConsumers(stream: string): Promise<Consumer[]> {
-        const url = `/management/stream/consumers?stream=${stream}`;
+        const url = `/api/v1/management/stream/consumers?stream=${stream}`;
         return this.getJson(url);
     }
 
     getConsumerPosition(stream: string, consumer: string): Promise<ConsumerPosition> {
-        const url = `/management/stream/consumer/position?stream=${stream}&consumer=${consumer}`;
+        const url = `/api/v1/management/stream/consumer/position?stream=${stream}&consumer=${consumer}`;
         return this.getJson(url);
     }
 
