@@ -1,8 +1,8 @@
 :9191 {
-	reverse_proxy /nuxeo/* http://localhost:8080 {
+	reverse_proxy /dasheo/* https://arturom.github.io {
+		header_up Host {upstream_hostport}
 	}
 
-	file_server {
-		root dist
+	reverse_proxy /nuxeo/* http://localhost:8080 {
 	}
 }
